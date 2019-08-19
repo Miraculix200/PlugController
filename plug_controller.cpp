@@ -15,19 +15,6 @@
 /* ########################################################################### */
 /* ########################################################################### */
 
-/* void dumpToBin(const char* filename, char* buffer)
-{
-        std::ofstream fout;
-    fout.open(filename, std::ios::binary | std::ios::out);
-
-    
-    fout.write(buffer, 2048);
-
-    fout.close();
-} */
-/* ########################################################################### */
-/* ########################################################################### */
-
 //Default Constructor
 
 PlugController::PlugController(){};
@@ -117,7 +104,6 @@ std::string PlugController::eraseEmeterStats()
     return sendCmd(cmd);
 }
 
-
 /* ########################################################################### */
 
 std::string PlugController::countDown(uint16_t seconds, bool act)
@@ -125,16 +111,16 @@ std::string PlugController::countDown(uint16_t seconds, bool act)
     std::string cmd = "{\"count_down\":{\"add_rule\":{\"enable\":1,\"delay\":";
     cmd += std::to_string(seconds);
     cmd += ",\"act\":";
-    if (act) cmd += "1,\"name\":\"turn on\"}}}";
-    else cmd += "0,\"name\":\"turn off\"}}}";
+    if (act)
+        cmd += "1,\"name\":\"turn on\"}}}";
+    else
+        cmd += "0,\"name\":\"turn off\"}}}";
 
     const std::string delete_all_rules = "{\"count_down\":{\"delete_all_rules\":null}}";
     sendCmd(delete_all_rules);
 
     return sendCmd(cmd);
 }
-
-
 
 /* ########################################################################### */
 
@@ -210,7 +196,6 @@ uint16_t PlugController::sockConnect(char *out, const char *ip_add, int port, co
         return 0;
     }
     send(sock, cmd, length, 0);
-    // send(sock , cmd , strlen(cmd) , 0 );
 
     valread = read(sock, buf, 2048);
     close(sock);
