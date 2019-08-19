@@ -50,6 +50,9 @@ void loop()
     if (response != "")
         parseEnergyStats(response);
 
+    response = lampPlug.sendCmd("{\"time\":{\"get_time\":null}}");
+    printf("\nsendCmd Response:\n%s\n", response.c_str());
+
     lampPlug.setLedOn();
     exit(0);
 }
